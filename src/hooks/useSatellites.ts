@@ -1,20 +1,18 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchSatelliteList, fetchSatellitePosition } from '@/lib/api'
+import { fetchSatellites } from '@/lib/api'
 
-// List of available satellites (cached by TanStack Query).
+// The satellite catalogue. TLEs change slowly, so we cache for an hour.
 export function useSatellites() {
   return useQuery({
     queryKey: ['satellites'],
-    queryFn: fetchSatelliteList,
+    queryFn: () => fetchSatellites(100),
+    staleTime: 1000 * 60 * 60,
   })
 }
 
-// Live position for one satellite. Polls every 5s so the globe stays current.
-export function useSatellitePosition(id: number) {
-  return useQuery({
-    queryKey: ['satellite', id],
-    queryFn: () => fetchSatellitePosition(id),
-    refetchInterval: 5000,
-    enabled: Number.isFinite(id) && id > 0,
-  })
+// Select a single satellite from the cached catalogue by NORAD id.
+export function useSatelliteRecord(id: number) {
+  const query = useSatellites()
+  const record = query.data?.find((s) => s.id === id)
+  return { ...query, record }
 }

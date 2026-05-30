@@ -1,17 +1,15 @@
-// Shape of the data we consume from the wheretheiss.at REST API.
-// Keeping API response types in one place makes the data layer self-documenting.
-
-export interface SatelliteSummary {
+// A satellite as delivered by CelesTrak: a name, its NORAD id, and the two
+// TLE (Two-Line Element) lines that describe its orbit.
+export interface SatelliteRecord {
   id: number
   name: string
+  line1: string
+  line2: string
 }
 
-export interface SatellitePosition {
-  id: number
-  name: string
+// A computed ground position at a moment in time.
+export interface GeoPosition {
   latitude: number
   longitude: number
-  altitude: number
-  velocity: number
-  timestamp: number
+  altitude: number // kilometres above sea level
 }
