@@ -25,7 +25,7 @@ function Globe() {
 // Satellite markers are passed in as children so data and rendering stay decoupled.
 export function Earth({ children }: { children?: ReactNode }) {
   return (
-    <Canvas camera={{ position: [0, 0, 4.5], fov: 50 }}>
+    <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 3, 5]} intensity={1.8} />
       <Stars radius={60} depth={50} count={2000} factor={4} fade />
@@ -36,10 +36,10 @@ export function Earth({ children }: { children?: ReactNode }) {
       {children}
       <OrbitControls
         enablePan={false}
-        minDistance={3}
-        maxDistance={8}
+        minDistance={2.5}
+        maxDistance={16}
         autoRotate
-        autoRotateSpeed={0.4}
+        autoRotateSpeed={0.3}
       />
     </Canvas>
   )

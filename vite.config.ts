@@ -7,4 +7,14 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
+  server: {
+    proxy: {
+      // Browser calls /celestrak/...  ->  Vite forwards to https://celestrak.org/...
+      '/celestrak': {
+        target: 'https://celestrak.org',
+        changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/celestrak/, ''),
+      },
+    },
+  },
 })

@@ -14,15 +14,17 @@ export function Sidebar() {
       <AddTrackedForm />
 
       <div>
-        <h2 className="mb-2 text-xs uppercase tracking-wide text-white/50">Satellites</h2>
-        {isLoading && <p className="text-sm text-white/40">Loading…</p>}
+        <h2 className="mb-2 text-xs uppercase tracking-wide text-white/50">
+          Satellites {data ? `(${data.length})` : ''}
+        </h2>
+        {isLoading && <p className="text-sm text-white/40">Loading orbital data…</p>}
         {isError && <p className="text-sm text-red-400">Failed to load satellites.</p>}
         <ul className="space-y-1">
           {data?.map((sat) => (
             <li key={sat.id}>
               <button
                 onClick={() => navigate(`/satellite/${sat.id}`)}
-                className="w-full rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-white/10"
+                className="w-full truncate rounded-md px-3 py-2 text-left text-sm transition-colors hover:bg-white/10"
               >
                 {sat.name}
               </button>
